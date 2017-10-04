@@ -14,7 +14,7 @@ Furthermore, Heimdall also helps maintain the public-private RSA key-pair in Key
 
 ## Requirements
 
-Heimdall requires Swift 2 and works with only Xcode 7 and above
+Heimdall requires Swift 3 and works with only Xcode 8 and above
 
 ## Installation
 
@@ -23,7 +23,7 @@ Heimdall requires Swift 2 and works with only Xcode 7 and above
 Heimdall is available as a CocoaPod, simply add the following line to your Podfile
 
 ```ruby
-pod 'Heimdall', '~> 1.0.0'
+pod 'Heimdall', '~> 1.1.0'
 ```
 
 Also, make sure your podfile includes the following line, which is necessary to support Swift frameworks
@@ -137,12 +137,12 @@ First step is to share your public key with another party:
 let localHeimdall = Heimdall(tagPrefix: "com.example")
 if let heimdall = localHeimdall, publicKeyData = heimdall.publicKeyDataX509() {
 
-    var publicKeyString = publicKeyData.base64EncodedStringWithOptions(.allZeros)
+    var publicKeyString = publicKeyData.base64EncodedString()
 
     // If you want to make this string URL safe,
     // you have to remember to do the reverse on the other side later
-    publicKeyString = publicKeyString.stringByReplacingOccurrencesOfString("/", withString: "_")
-    publicKeyString = publicKeyString.stringByReplacingOccurrencesOfString("+", withString: "-")
+    publicKeyString = publicKeyString.replacingOccurrences(of: "/", with: "_")
+    publicKeyString = publicKeyString.replacingOccurrences(of: "+", with: "-")
 
     println(publicKeyString) // Something along the lines of "MIGfMA0GCSqGSIb3DQEBAQUAA..."
 
